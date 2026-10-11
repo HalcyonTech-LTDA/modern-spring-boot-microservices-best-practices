@@ -42,7 +42,7 @@ This plugin establishes production-grade engineering standards for Spring Boot m
 
 ## What's Included
 
-### 1. Automatic Guardrails (`rules/AGENTS.md`)
+### 1. Automatic Guardrails (`rules/modern-spring-boot-microservices.md`)
 Automatically enforced across all microservice projects:
 - **Database-per-Service Mandate**: Absolute ban on shared databases, cross-schema SQL joins, and cross-service foreign keys.
 - **Declarative HTTP Interfaces & RestClient**: Ban on legacy `RestTemplate` and deprecated OpenFeign in favor of Spring 6 Declarative HTTP Interfaces.
@@ -97,7 +97,7 @@ modern-spring-boot-microservices-best-practices/
 ├── plugin.json
 ├── README.md
 ├── rules/
-│   └── AGENTS.md
+│   └── modern-spring-boot-microservices.md
 └── skills/
     ├── modern-microservices-architecture-and-decomposition/
     │   ├── SKILL.md
