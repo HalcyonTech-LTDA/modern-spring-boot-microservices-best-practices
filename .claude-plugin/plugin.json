@@ -1,0 +1,14 @@
+{
+  "name": "modern-spring-boot-microservices-best-practices",
+  "description": "Comprehensive engineering standards, architectural patterns, and production guardrails for modern Microservices using modern Spring Boot 3.x+: database-per-service isolation, declarative HTTP interfaces with RestClient, Resilience4j fault tolerance, transactional Outbox & Saga distributed data patterns, Spring Cloud Gateway with OAuth2/JWT token relay, distributed tracing with Micrometer & OpenTelemetry, and consumer-driven contract testing.",
+  "author": {
+    "name": "Halcyon Tech",
+    "url": "https://github.com/HalcyonTech-LTDA"
+  },
+  "homepage": "https://github.com/HalcyonTech-LTDA/modern-spring-boot-microservices-best-practices",
+  "repository": "https://github.com/HalcyonTech-LTDA/modern-spring-boot-microservices-best-practices",
+  "license": "MIT",
+  "skills": [
+    "./claude/skills/"
+  ]
+}
