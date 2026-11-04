@@ -1,37 +1,39 @@
-# Modern Spring Boot Microservices Best Practices Plugin
+<div align="center">
 
-An Antigravity plugin establishing automated engineering guardrails, architectural patterns, resilience standards, distributed data consistency disciplines, perimeter security, and full-spectrum observability for modern Microservices using **Spring Boot 3.x+** (3.2+, 3.3+, 3.4+) and **Java 21+**.
+# Modern Spring Boot Microservices Best Practices Plugin
+### Distributed Microservices Architecture, Resilience4j & Observability
+
+[![Antigravity Plugin](https://img.shields.io/badge/Antigravity-Plugin%20v1.0.0-4F46E5.svg)](https://antigravity.google)
+[![License: MIT](https://img.shields.io/badge/License-MIT-10B981.svg)](./LICENSE)
+[![Organization](https://img.shields.io/badge/Organization-HalcyonTech--LTDA-black.svg)](https://github.com/HalcyonTech-LTDA)
+
+<p align="center">
+  <b>Comprehensive engineering standards, architectural patterns, and production guardrails for modern Microservices using modern Spring Boot 3.x+: database-per-service isolation, declarative HTTP interfaces with RestClient, Resilience4j fault tolerance, transactional Outbox & Saga distributed data patterns, Spring Cloud Gateway with OAuth2/JWT token relay, distributed tracing with Micrometer & OpenTelemetry, and consumer-driven contract testing.</b>
+</p>
+
+</div>
 
 ---
 
-## Installation
+## Installation & Verification
 
-### Antigravity
+### Antigravity CLI (`agy`)
 
-Install directly in Antigravity via the CLI:
+Install directly into your Antigravity environment via the CLI:
 
 ```bash
 agy plugin install https://github.com/HalcyonTech-LTDA/modern-spring-boot-microservices-best-practices
 ```
 
-Verify that the plugin is installed and ready:
+Verify that the plugin is active and adheres to the strict official schema:
 
 ```bash
 agy plugin list
+agy plugin validate --strict ./modern-spring-boot-microservices-best-practices
 ```
-
-### Claude Code
-
-Add the Halcyon Tech marketplace once, then install the plugin:
-
-```text
-/plugin marketplace add HalcyonTech-LTDA/halcyon-plugins
-/plugin install modern-spring-boot-microservices-best-practices@halcyon-plugins
-```
-
-Skills are namespaced by plugin in Claude Code (`/modern-spring-boot-microservices-best-practices:<skill-name>`). The guardrails in `rules/` load through the skills in `claude/skills/`.
 
 ---
+
 ## Overview
 
 Transitioning from a monolithic architecture to distributed microservices promises developer autonomy, granular scalability, and rapid deployment velocity. However, without rigorous architectural discipline and cloud-native standards, microservice ecosystems rapidly degrade into critical production failure modes:
@@ -53,94 +55,6 @@ This plugin establishes production-grade engineering standards for Spring Boot m
 
 ---
 
-## What's Included
-
-### 1. Automatic Guardrails (`rules/modern-spring-boot-microservices.md`)
-Automatically enforced across all microservice projects:
-- **Database-per-Service Mandate**: Absolute ban on shared databases, cross-schema SQL joins, and cross-service foreign keys.
-- **Declarative HTTP Interfaces & RestClient**: Ban on legacy `RestTemplate` and deprecated OpenFeign in favor of Spring 6 Declarative HTTP Interfaces.
-- **Mandatory Resilience4j Boundaries**: Strict circuit breaking, timeouts, and jittered retries on all synchronous inter-service calls.
-- **Zero Dual Writes (Transactional Outbox)**: Mandatory atomic local database persistence with decoupled CDC or polling event dispatchers.
-- **Idempotent Consumers & DLT Discipline**: Idempotency guards via business keys/deduplication tables and non-blocking retry routing to Dead-Letter Topics (`<topic>.DLT`).
-- **Sagas over Distributed 2PC**: Absolute ban on distributed Two-Phase Commit (XA); mandatory Sagas with idempotent compensating transactions.
-- **Edge Gateway Token Relay & Stateless JWT Servers**: Perimeter authentication with Spring Cloud Gateway and downstream stateless JWT Resource Servers.
-- **Distributed Tracing & W3C TraceContext Propagation**: Mandatory Micrometer Tracing with OpenTelemetry, MDC injection of `traceId`/`spanId`, and RFC 7807 `ProblemDetail` trace integration.
-- **Cloud-Native Kubernetes Probes & Graceful Shutdown**: Actuator Liveness and Readiness probes paired with `server.shutdown: graceful`.
-- **Consumer-Driven Contract (CDC) Testing**: Fast, isolated contract verification (Pact / Spring Cloud Contract) avoiding shared staging bottlenecks.
-- **Backend-for-Frontend (BFF) Pattern**: Dedicated client-tailored gateways preventing monolithic edge bottlenecks.
-- **Zero Hardcoded Secrets & Strict Placeholder Discipline**: 12-factor configuration via immutable `@ConfigurationProperties` records (ban on `@Value`) and strict placeholders without default fallback values (`.env.example` discipline).
-
----
-
-### 2. Specialized Skills (`skills/`)
-
-#### 🧱 `modern-microservices-architecture-and-decomposition`
-Guides domain boundary modeling, bounded context identification, database isolation, and API contract design:
-- `references/bounded_contexts_and_database_per_service.md`: DDD Bounded Contexts, aggregate boundaries, Anti-Corruption Layer (ACL) adapters, database isolation rules, and CQRS read projections.
-- `references/api_first_and_contract_design.md`: OpenAPI 3.1 specification blueprints, tolerant reader rules, backward compatibility guidelines, and Gradle code generation pipelines.
-
-#### ⚡ `modern-microservices-inter-service-communication`
-Guides synchronous inter-service communication, declarative HTTP clients, connection pools, and Resilience4j fault tolerance:
-- `references/declarative_http_interfaces_and_restclient.md`: Declarative `@HttpExchange` interfaces, Apache HttpClient 5 / JDK connection pooling, RFC 7807 error handling, and Virtual Thread safety.
-- `references/resilience4j_circuit_breakers_and_retries.md`: Circuit Breaker state machines, `application.yaml` configurations, retry backoff with jitter, fallback methods, and Micrometer metrics.
-
-#### 🔄 `modern-microservices-event-driven-and-data-consistency`
-Guides asynchronous event-driven messaging, Transactional Outbox, idempotency, and distributed Sagas:
-- `references/transactional_outbox_and_cdc_pattern.md`: Outbox schema DDL, atomic JPA/JdbcClient persistence, Debezium CDC connector configuration, and polling fallback workers.
-- `references/idempotent_consumer_and_dead_letter_topics.md`: Database deduplication table pattern, Spring Kafka `@RetryableTopic` choreography, Dead-Letter Topic handlers, and poison-pill recovery.
-- `references/saga_pattern_and_distributed_transactions.md`: Banning 2PC/XA, Choreography vs Orchestration Sagas, Spring Boot Saga Orchestrator state machine, and compensating transaction rules.
-
-#### 🛡️ `modern-microservices-perimeter-gateway-and-security`
-Guides API gateway architecture, routing, rate limiting, and zero-trust perimeter security:
-- `references/spring_cloud_gateway_and_bff_pattern.md`: Spring Cloud Gateway configuration, Redis token bucket rate limiting, global CORS, and Backend-for-Frontend (BFF) architecture.
-- `references/oauth2_token_relay_and_jwt_resource_server.md`: Gateway OAuth2 login & TokenRelay filter, downstream stateless Spring Security Resource Server setup, and method-level security (`@PreAuthorize`).
-
-#### 🔭 `modern-microservices-observability-and-resilience-ops`
-Guides distributed tracing, structured logging, Kubernetes lifecycle probes, and Consumer-Driven Contract testing:
-- `references/distributed_tracing_and_micrometer_otel.md`: Micrometer Tracing with OpenTelemetry, OTLP exporters, Logstash JSON Logback encoder, and MDC trace propagation in RFC 7807 `ProblemDetail`.
-- `references/health_probes_and_graceful_shutdown.md`: Spring Boot Actuator Liveness/Readiness probes, graceful shutdown timeouts, and Kubernetes Deployment manifests.
-- `references/contract_testing_and_service_virtualization.md`: Pact consumer & provider tests, Testcontainers `@ServiceConnection`, and WireMock service virtualization.
-
----
-
-## Directory Layout
-
-```text
-modern-spring-boot-microservices-best-practices/
-├── plugin.json
-├── README.md
-├── rules/
-│   └── modern-spring-boot-microservices.md
-└── skills/
-    ├── modern-microservices-architecture-and-decomposition/
-    │   ├── SKILL.md
-    │   └── references/
-    │       ├── api_first_and_contract_design.md
-    │       └── bounded_contexts_and_database_per_service.md
-    ├── modern-microservices-event-driven-and-data-consistency/
-    │   ├── SKILL.md
-    │   └── references/
-    │       ├── idempotent_consumer_and_dead_letter_topics.md
-    │       ├── saga_pattern_and_distributed_transactions.md
-    │       └── transactional_outbox_and_cdc_pattern.md
-    ├── modern-microservices-inter-service-communication/
-    │   ├── SKILL.md
-    │   └── references/
-    │       ├── declarative_http_interfaces_and_restclient.md
-    │       └── resilience4j_circuit_breakers_and_retries.md
-    ├── modern-microservices-observability-and-resilience-ops/
-    │   ├── SKILL.md
-    │   └── references/
-    │       ├── contract_testing_and_service_virtualization.md
-    │       ├── distributed_tracing_and_micrometer_otel.md
-    │       └── health_probes_and_graceful_shutdown.md
-    └── modern-microservices-perimeter-gateway-and-security/
-        ├── SKILL.md
-        └── references/
-            ├── oauth2_token_relay_and_jwt_resource_server.md
-            └── spring_cloud_gateway_and_bff_pattern.md
-```
-
 ---
 
 ## Core Technologies & Compatibility Baseline
@@ -156,7 +70,63 @@ modern-spring-boot-microservices-best-practices/
 
 ---
 
-## License
+---
 
-This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
-Copyright (c) 2026 Halcyon Tech.
+## What's Included (Component Catalog)
+
+### Contextual Rules (`rules/`)
+Automatically loaded to govern and protect project contexts:
+- **[`modern-spring-boot-microservices.md`](rules/modern-spring-boot-microservices.md)**: >-
+
+### Procedural Skills (`skills/`)
+On-demand actionable workflows and runbooks:
+- **[`/modern-microservices-architecture-and-decomposition`](skills/modern-microservices-architecture-and-decomposition/SKILL.md)**: Use this skill when defining microservice boundaries, applying Domain-Driven Design (DDD) Bounded Contexts, implementing the database-per-service pattern, preventing distributed monoliths, creating Anti-Corruption Layers (ACL), or authoring API-First contracts with OpenAPI 3.1.
+- **[`/modern-microservices-event-driven-and-data-consistency`](skills/modern-microservices-event-driven-and-data-consistency/SKILL.md)**: Use this skill when designing asynchronous messaging, event-driven architectures with Apache Kafka, implementing the Transactional Outbox pattern with Debezium CDC, handling idempotent message consumption, managing Dead-Letter Topics (DLT), or orchestrating distributed transactions with the Saga pattern.
+- **[`/modern-microservices-inter-service-communication`](skills/modern-microservices-inter-service-communication/SKILL.md)**: Use this skill when implementing synchronous RPC communication between Spring Boot microservices: declarative HTTP interfaces (@HttpExchange), RestClient configuration, connection pool tuning, Resilience4j fault tolerance (CircuitBreaker, Retry, RateLimiter, Bulkhead, TimeLimiter), fallback mechanisms, or high-performance gRPC.
+- **[`/modern-microservices-observability-and-resilience-ops`](skills/modern-microservices-observability-and-resilience-ops/SKILL.md)**: Use this skill when implementing distributed tracing with Micrometer Tracing and OpenTelemetry (OTel), configuring structured JSON logging with MDC trace propagation, enabling Kubernetes liveness/readiness health probes, configuring graceful shutdown, or setting up Consumer-Driven Contract testing (Pact / Spring Cloud Contract) with WireMock.
+- **[`/modern-microservices-perimeter-gateway-and-security`](skills/modern-microservices-perimeter-gateway-and-security/SKILL.md)**: Use this skill when configuring API gateways with Spring Cloud Gateway (MVC or Reactive), designing Backend-for-Frontend (BFF) architectures, implementing OAuth2/OIDC Token Relay, securing downstream Spring Boot microservices as stateless JWT Resource Servers, or establishing service-to-service mTLS.
+
+---
+
+## Directory Hierarchy
+
+```text
+modern-spring-boot-microservices-best-practices/
+├── plugin.json              # Official Antigravity manifest (schema v1)
+├── LICENSE                  # MIT License (Copyright 2026 HalcyonTech LTDA)
+├── .gitignore               # System ignores & installed_version.json exclusions
+├── .gitattributes           # Deterministic line endings (* text=auto eol=lf)
+├── README.md                # Golden Standard documentation & runbook
+├── assets/
+│   └── logo.svg             # Official Halcyon Tech corporate vector symbol
+├── rules/                   # Contextual rules discovered automatically
+│   └── modern-spring-boot-microservices.md
+├── skills/                  # Actionable procedural skills (Progressive Disclosure)
+│   └── modern-microservices-architecture-and-decomposition/
+│       └── SKILL.md
+│   └── modern-microservices-event-driven-and-data-consistency/
+│       └── SKILL.md
+│   └── modern-microservices-inter-service-communication/
+│       └── SKILL.md
+│   └── modern-microservices-observability-and-resilience-ops/
+│       └── SKILL.md
+│   └── modern-microservices-perimeter-gateway-and-security/
+│       └── SKILL.md
+```
+
+---
+
+## 💡 Prompt Recipes & Use Cases
+
+```markdown
+- "Design microservice boundaries following Domain-Driven Design and database-per-service"
+- "Implement Resilience4j circuit breakers, retries, and declarative HTTP interfaces"
+- "Configure distributed tracing with Micrometer, OpenTelemetry, and structured logging"
+```
+
+---
+
+## 📄 License & Corporate Governance
+
+Distributed under the **MIT License**. Copyright (c) 2026 **HalcyonTech LTDA**.  
+Engineered with precision and excellence by [Halcyon Tech](https://github.com/HalcyonTech-LTDA).
